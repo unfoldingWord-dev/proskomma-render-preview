@@ -4,13 +4,13 @@
   "language": "en",
   "textDirection": "ltr",
   "uid": "ULT",
-  "bookSources": [
-    "PSA",
-    "MAT",
-    "MRK",
-    "LUK",
-    "JHN"
-  ],
+//  "bookSources": [
+//    "PSA",
+//    "MAT",
+//    "MRK",
+//    "LUK",
+//    "JHN"
+//  ],
   "peripheralSources": [],
   "structure": [
     [

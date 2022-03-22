@@ -1,49 +1,8 @@
 const fse = require('fs-extra');
 const path = require('path');
-
-const {Proskomma} = require('proskomma');
-const {
-    ScriptureParaModel,
-    ScriptureParaModelQuery
-} = require('proskomma-render');
-const MainDocSet = require('./MainDocSet');
-
-const bookMatches = str => {
-    for (const book of config.bookSources) {
-        if (str.includes(book) || str.includes(book.toLowerCase())) {
-            return true;
-        }
-    }
-    return false;
-}
-
-const peripheralMatches = str => {
-    for (const periph of config.peripheralSources) {
-        if (str.includes(periph) || str.includes(periph.toLowerCase())) {
-            return true;
-        }
-    }
-    return false;
-}
-
-const doMainRender = (config, result) => {
-    ts = Date.now();
-    const model = new ScriptureParaModel(result, config);
-    model.addDocSetModel('default', new MainDocSet(result, model.context, config));
-    model.render();
-    console.log(`Main rendered in  ${(Date.now() - ts) / 1000} sec`);
-    console.log(model.logString());
-}
-
-const doRender = async (pk, config) => {
-    const thenFunction = result => {
-        console.log(`Query processed in  ${(Date.now() - ts) / 1000} sec`);
-        doMainRender(config, result);
-        return config;
-    }
-    await ScriptureParaModelQuery(pk)
-        .then(thenFunction)
-};
+const {doRender, peripheralMatches, bookMatches} = require("./makeHtmlPreview");
+const { Proskomma } = require('proskomma');
+const doRenderUSFM = require("./index");
 
 if (process.argv.length !== 4) {
     throw new Error("USAGE: node make_pdf.js <configPath> <htmlOutputPath>");
@@ -65,8 +24,11 @@ let nPeriphs = 0;
 
 const pk = new Proskomma();
 const fqSourceDir = path.resolve(config.configRoot, config.sourceDir);
+pk.importUsfmPeriph = function (param, content, param3) {
+  
+}
 for (const filePath of fse.readdirSync(fqSourceDir)) {
-    if (bookMatches(filePath)) {
+    if (bookMatches(filePath, config)) {
         console.log(`   ${filePath} (book)`);
         nBooks++;
         const content = fse.readFileSync(path.join(fqSourceDir, filePath));
@@ -77,7 +39,7 @@ for (const filePath of fse.readdirSync(fqSourceDir)) {
             content,
             {}
         );
-    } else if (peripheralMatches(filePath)) {
+    } else if (peripheralMatches(filePath, config)) {
         console.log(`   ${filePath} (peripheral)`);
         nPeriphs++;
         let content = fse.readFileSync(path.join(fqSourceDir, filePath));
@@ -91,6 +53,12 @@ for (const filePath of fse.readdirSync(fqSourceDir)) {
 console.log(`${nBooks} book(s) and ${nPeriphs} peripheral(s) loaded in ${(Date.now() - ts) / 1000} sec`);
 ts = Date.now();
 
-doRender(pk, config).then((res) => {
+doRender(pk, config, ts).then((res) => {
     // console.log(JSON.stringify(config, null, 2));
 });
+
+const usfm = fse.readFileSync(path.join('./test/test_data/ult/usfm/44-JHN.usfm');
+
+doRenderUSFM(usfm).then(html => {
+  console.log(html);
+})
