@@ -1,6 +1,6 @@
 import fse from 'fs-extra';
 import path from 'path';
-import {renderUsfmToHTML} from "../renderUsfm.js";
+import {renderUsfmToHTML} from "../lib/index.js";
 
 let ts = Date.now();
 
@@ -20,7 +20,7 @@ const i18n = {
   "nt": "New Testament"
 }
 
-const html = await renderUsfmToHTML(usfm, bookID, htmlTitle, language, direction, structure, i18n);
+const html = await renderUsfmToHTML(usfm, bookID, htmlTitle, language, direction, i18n);
 
 console.log(`1 book loaded in ${(Date.now() - ts) / 1000} sec`);
 fse.writeFileSync('./output.html', html);

@@ -2,14 +2,14 @@ import fse from 'fs-extra';
 import path from 'path';
 import appRootPath from "app-root-path";
 const appRoot = appRootPath.toString();
-import {doRender} from '../index.js';
+import {doRender} from '../src/index.js';
 
 import {Proskomma} from 'proskomma';
 import {
     ScriptureParaModel,
     ScriptureParaModelQuery
 } from 'proskomma-render';
-import MainDocSet from '../MainDocSet.js';
+import MainDocSet from '../src/MainDocSet.js';
 
 const bookMatches = str => {
     for (const book of config.bookSources) {
