@@ -19,11 +19,11 @@
   "homepage": "https://github.com/Proskomma/proskomma-render-pdf#readme",
   "dependencies": {
     "app-root-path": "^3.0.0",
-    "proskomma-render": "^0.5.4"
+    "proskomma-render": "^0.5.4",
+    "proskomma": "^0.6.8"
   },
   "devDependencies": {
     "path": "^0.12.7",
-    "proskomma": "^0.6.8",
     "fs-extra": "^10.0.0"
   }
 }
