@@ -1,5 +1,6 @@
 import {ScriptureParaModel, ScriptureParaModelQuery} from "proskomma-render";
 import MainDocSet from "./MainDocSet.js";
+import {renderUsfmToHTML} from "./renderUsfm.js";
 
 const doRender = async (pk, config, docSetIds, documentIds) => {
     let ts = Date.now();
@@ -20,4 +21,4 @@ const doRender = async (pk, config, docSetIds, documentIds) => {
     return thenFunction(result);
 };
 
-export {doRender}
+export {doRender, renderUsfmToHTML}
